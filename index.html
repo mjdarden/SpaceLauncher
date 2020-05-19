@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <title>Mike</title>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src='https://unpkg.com/babel-standalone@6/babel.min.js'></script>
+  </head>
+  <body>
+    <style type="text/css">
+#buttonOne {
+  background-color: red;
+ padding: .5em;
+ -moz-border-radius: 5px;
+ -webkit-border-radius: 5px;
+ border-radius: 15px;
+ color: #fff;
+ font-family: 'Oswald';
+ font-size: 25px;
+ text-decoration: none;
+ border: none;
+}
+#buttonOne:hover {
+ border: none;
+ background: green;
+ box-shadow: 0px 0px 1px #777;
+}
+</style>
+    <div id='hello'></div>
+    <script type='text/babel'>
+      class App extends React.Component {
+           constructor(props) {
+             super(props)
+
+           }
+           state = {
+             sum: 0,
+             addNumber: 1000,
+             scientistAddNumber: 5,
+             factoryAddNumber: 50,
+             upgradeCost: 25,
+             upgradeAmount: 1,
+             scientistCost: 100,
+             numScientist: 0,
+             factoryCost: 1000,
+             numFactory: 0,
+             rocketCost: 10000,
+             numRocket: 0,
+             autoClickTime: 1000,
+             autoFactoryClickTime: 1000,
+             numUpgrade: 0,
+             rppsec: 0,
+             fuelEffinciencyCost: 100,
+             fuelEffinciency: 10,
+             capacity: 1,
+             capacityCost: 500,
+             range: 1000,
+             rangeCost: 1000,
+             reliability: .1,
+             reliabilityCost: 1000,
+             numLaunch: 0,
+             launch: 0,
+             moonAccess: false,
+           }
+
+          putTogether = () => {
+             // console.log(sum)
+             this.setState({sum: this.state.sum + this.state.addNumber})
+           }
+
+           autoPutTogether = () => {
+              // console.log(sum)
+              this.setState({sum: this.state.sum + (this.state.scientistAddNumber * this.state.numScientist) + (this.state.factoryAddNumber * this.state.numFactory)})
+            }
+
+           autoClick = () => {
+             this.autoPutTogether()
+             this.timeout = setTimeout(this.autoClick, this.state.autoClickTime)
+           }
+
+           pointsPerSecond() {
+             this.setState({
+               rppsec: (this.state.numScientist * this.state.scientistAddNumber) + (this.state.numFactory * this.state.factoryAddNumber)
+             })
+           }
+
+           hireScientist() {
+             this.setState({
+               sum: this.state.sum - this.state.scientistCost,
+               numScientist: this.state.numScientist + 1,
+               scientistCost: this.state.scientistCost * 1.5,
+             }, () => {
+               if (!this.timeout) {
+                 this.autoClick()
+             }
+             this.pointsPerSecond()
+            })
+           }
+
+          upgradeClick() {
+            this.setState({
+              amountUpgade: this.state.numUpgade + 1,
+              addNumber: this.state.addNumber + this.state.upgradeAmount,
+              sum: this.state.sum - this.state.upgradeCost,
+              upgradeCost: this.state.upgradeCost * 1.5
+            })
+          }
+
+          buildFactory() {
+            this.setState({
+              sum: this.state.sum - this.state.factoryCost,
+              numFactory: this.state.numFactory + 1,
+              factoryCost: this.state.factoryCost * 1.5,
+            }, () => {
+              if (!this.timeout) {
+                this.autoClick()
+            }
+            this.pointsPerSecond()
+           })
+          }
+
+          buildRocket() {
+            this.setState({
+              sum: this.state.sum - this.state.rocketCost,
+              numRocket: this.state.numRocket + 1,
+              rocketCost: this.state.rocketCost * 1.3
+
+            })
+          }
+
+          upgradeFuelEffinciency() {
+            this.setState({
+              sum: this.state.sum - this.state.fuelEffinciencyCost,
+              fuelEffinciency: this.state.fuelEffinciency * 1.1,
+            })
+          }
+          upgradeCapacity() {
+            this.setState({
+              sum: this.state.sum - this.state.capacityCost,
+              capacity: this.state.capacity + 1,
+            })
+          }
+          upgradeRange() {
+            this.setState({
+              sum: this.state.sum - this.state.rangeCost,
+              range: this.state.range * 1.1,
+            })
+          }
+          upgradeReliability() {
+            this.setState({
+              sum: this.state.sum - this.state.reliabilityCost,
+              reliability: this.state.reliability * 1.1,
+            })
+          }
+
+          launchRocket() {
+            this.setState({
+              numRocket: this.state.numRocket - 1,
+              launch: 1
+            })
+            let num
+            num = Math.random()
+            let launch: false
+            if (num < this.state.reliability) {
+              launch: true
+              this.setState({numLaunch: this.state.numLaunch + 1})
+              console.log(num)
+              return launch
+            }
+            else {
+              return launch
+            }
+          }
+
+
+           render() {
+             return (
+             <div style={{border: '1px solid black'}}>
+               <button id="buttonOne" onClick={() => this.putTogether()}>Research</button>
+               <div> Research Points: {this.state.sum}</div>
+               <div> Research Level: {this.state.addNumber}</div>
+               <div> Number of Scientists: {this.state.numScientist}</div>
+               <div> Number of Factories: {this.state.numFactory}</div>
+               <div> auto Rp/sec: {this.state.rppsec}</div>
+               <br/>
+               <div style={{display: 'flex', flexDirection: 'row'}}>
+                 <div style={{display: 'flex', flexDirection: 'column', width: '25%'}}>
+                   <div> Scientist: {this.state.upgradeCost}Rp</div>
+                   <button
+                   id="buttonOne"
+                   style={{ backgroundColor: this.state.sum<this.state.upgradeCost ? "grey" : undefined}}
+                   disabled={this.state.sum<this.state.upgradeCost}
+                   onClick={() => this.upgradeClick()}
+                   >Upgrade</button>
+                 </div>
+                 <div style={{display: 'flex', flexDirection: 'column', width: '25%'}}>
+                   <div> Scientist: {this.state.scientistCost}Rp</div>
+                   <button
+                   id="buttonOne"
+                   style={{ backgroundColor: this.state.sum<this.state.scientistCost ? "grey" : undefined}}
+                   disabled={this.state.sum<this.state.scientistCost}
+                   onClick={() => this.hireScientist()}
+                   >Hire Scientist</button>
+                 </div>
+                 <div style={{display: 'flex', flexDirection: 'column', width: '25%'}}>
+                   <div> Factory: {this.state.factoryCost}Rp</div>
+                   <button
+                   id="buttonOne"
+                   style={{ backgroundColor: this.state.sum<this.state.factoryCost ? "grey" : undefined}}
+                   disabled={this.state.sum<this.state.factoryCost}
+                   onClick={() => this.buildFactory()}
+                   >Build Factory</button>
+                 </div>
+                 <div style={{display: 'flex', flexDirection: 'column', width: '25%'}}>
+                   <div> Rocket: {this.state.rocketCost}Rp</div>
+                   <button
+                   id="buttonOne"
+                   style={{ backgroundColor: this.state.sum<this.state.rocketCost ? "grey" : undefined}}
+                   disabled={this.state.sum<this.state.rocketCost}
+                   onClick={() => this.buildRocket()}
+                   >Build Rocket</button>
+                 </div>
+              </div>
+              <br/>
+              <h1>Rocket Stats</h1>
+              <div>Fuel Effinciency: {this.state.fuelEffinciency}</div>
+              <div>Capacity: {this.state.capacity}</div>
+              <div>Range: {this.state.range}</div>
+              <div>Reliability: {this.state.reliability}</div>
+              <br/>
+              <div style={{display: 'flex', flexDirection: 'row'}}>
+                 <div style={{display: 'flex', flexDirection: 'column', width: '25%'}}>
+                   <div> Fuel Effinciency: {this.state.fuelEffinciencyCost}Rp</div>
+                   <button
+                   id="buttonOne"
+                   style={{ backgroundColor: (this.state.sum<this.state.fuelEffinciencyCost || this.state.launch <= 0)  ? "grey" : undefined}}
+                   disabled={(this.state.sum<this.state.fuelEffinciencyCost)}
+                   onClick={() => this.upgradeFuelEffinciency()}
+                   >Upgrade</button>
+                 </div>
+                 <div style={{display: 'flex', flexDirection: 'column', width: '25%'}}>
+                   <div> Capacity: {this.state.capacityCost}Rp</div>
+                   <button
+                   id="buttonOne"
+                   style={{ backgroundColor: (this.state.sum<this.state.capacityCost || this.state.launch <= 0)  ? "grey" : undefined}}
+                   disabled={(this.state.sum<this.state.fuelEffinciencyCost)}
+                   onClick={() => this.upgradeCapacity()}
+                   >Upgrade</button>
+                 </div>
+                 <div style={{display: 'flex', flexDirection: 'column', width: '25%'}}>
+                   <div> Range: {this.state.rangeCost}Rp</div>
+                   <button
+                   id="buttonOne"
+                   style={{ backgroundColor: (this.state.sum<this.state.rangeCost || this.state.launch <= 0)  ? "grey" : undefined}}
+                   disabled={(this.state.sum<this.state.rangeCost)}
+                   onClick={() => this.upgradeRange()}
+                   >Upgrade</button>
+                 </div>
+                 <div style={{display: 'flex', flexDirection: 'column', width: '25%'}}>
+                   <div> Reliability: {this.state.reliabilityCost}Rp</div>
+                   <button
+                   id="buttonOne"
+                   style={{ backgroundColor: (this.state.sum<this.state.reliabilityCost || this.state.launch <= 0 || this.state.reliability>=1)  ? "grey" : undefined}}
+                   disabled={(this.state.sum<this.state.reliabilityCost || this.state.reliability>=1)}
+                   onClick={() => this.upgradeReliability()}
+                   >Upgrade</button>
+                 </div>
+                 <div style={{display: 'flex', flexDirection: 'column', width: '25%'}}>
+                   <br/>
+                   <button
+                   id="buttonOne"
+                   style={{ backgroundColor: (this.state.numRocket <= 0)  ? "grey" : undefined}}
+                   disabled={(this.state.numRocket<1)}
+                   onClick={() => this.launchRocket()}
+                   >LAUNCH</button>
+                 </div>
+               </div>
+               <div> Number of Successful launches: {this.state.numLaunch}</div>
+             </div>
+             )
+           }
+         }
+
+    ReactDOM.render(
+      <App />,
+      document.getElementById('hello'),
+    )
+    </script>
+  </body>
+</html>
