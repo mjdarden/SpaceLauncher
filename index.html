@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<div id='aqui' style="background-image: url('https://i.insider.com/5dfab6ce855cc20c514e79f6?width=800&format=jpeg&auto=webp'); height: calc(100vh)">
 <html lang="en" dir="ltr">
   <head>
     <title>Mike</title>
@@ -7,44 +8,44 @@
   <script src='https://unpkg.com/babel-standalone@6/babel.min.js'></script>
   </head>
   <body>
-    <style type="text/css">
-#buttonOne {
-  background-color: red;
- padding: .5em;
- -moz-border-radius: 5px;
- -webkit-border-radius: 5px;
- border-radius: 15px;
- color: #fff;
- font-family: 'Oswald';
- font-size: 25px;
- text-decoration: none;
- border: none;
-}
-#buttonOne:hover {
- border: none;
- background: green;
- box-shadow: 0px 0px 1px #777;
-}
-</style>
-<style type="text/css">
-  #buttonTwo {
-  background-color: red;
-  padding: .5em;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 15px;
-  color: #fff;
-  font-family: 'Oswald';
-  font-size: 50px;
-  text-decoration: none;
-  border: none;
-  }
-  #buttonTwo:hover {
-  border: none;
-  background: green;
-  box-shadow: 0px 0px 1px #777;
-  }
-</style>
+  <style type="text/css">
+    #buttonOne {
+      background-color: white;
+     padding: .5em;
+     -moz-border-radius: 5px;
+     -webkit-border-radius: 5px;
+     border-radius: 15px;
+     color: black;
+     font-family: 'Oswald';
+     font-size: 25px;
+     text-decoration: none;
+     border: none;
+    }
+    #buttonOne:hover {
+     border: none;
+     background: green;
+     box-shadow: 0px 0px 1px #777;
+    }
+  </style>
+  <style type="text/css">
+    #buttonTwo {
+    background-color: white;
+    padding: .5em;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 15px;
+    color: black;
+    font-family: 'Oswald';
+    font-size: 50px;
+    text-decoration: none;
+    border: none;
+    }
+    #buttonTwo:hover {
+    border: none;
+    background: green;
+    box-shadow: 0px 0px 1px #777;
+    }
+  </style>
     <div id='hello'></div>
     <script type='text/babel'>
       class App extends React.Component {
@@ -191,6 +192,15 @@
             }
           }
 
+          moonCheck() {
+            return(
+            (this.state.fuelEffinciency < 20) ||
+            (this.state.capacity < 5) ||
+            (this.state.range < 10000) ||
+            (this.state.reliability < 0.8) ||
+            (this.state.numLaunch < 10))
+          }
+
           goToMoon() {
             <popup>YOU WIN</popup>
             this.setState({
@@ -202,7 +212,7 @@
 
            render() {
              return (
-             <div style={{border: '1px solid black'}}>
+             <div style={{border: '1px solid black', color: "white"}}>
                <button id="buttonOne" onClick={() => this.putTogether()}>Research</button>
                <div> Research Points: {this.state.sum}</div>
                <div> Research Level: {this.state.addNumber}</div>
@@ -249,84 +259,79 @@
                  </div>
               </div>
               <br/>
-              <h1>Rocket Stats</h1>
-              <div>Fuel Effinciency: {this.state.fuelEffinciency}</div>
-              <div>Capacity: {this.state.capacity}</div>
-              <div>Range: {this.state.range}</div>
-              <div>Reliability: {this.state.reliability}</div>
-              <br/>
-              <div style={{display: 'flex', flexDirection: 'row'}}>
-                 <div style={{display: 'flex', flexDirection: 'column', width: '25%'}}>
-                   <div> Fuel Effinciency: {this.state.fuelEffinciencyCost}Rp</div>
-                   <button
-                   id="buttonOne"
-                   style={{ backgroundColor: (this.state.sum<this.state.fuelEffinciencyCost || this.state.launch <= 0)  ? "grey" : undefined}}
-                   disabled={(this.state.sum<this.state.fuelEffinciencyCost)}
-                   onClick={() => this.upgradeFuelEffinciency()}
-                   >Upgrade</button>
+              {(this.state.numRocket > 0 || this.state.launch) && <div>
+                <h1>Rocket Stats</h1>
+                <div>Fuel Effinciency: {this.state.fuelEffinciency}</div>
+                <div>Capacity: {this.state.capacity}</div>
+                <div>Range: {this.state.range}</div>
+                <div>Reliability: {this.state.reliability}</div>
+                <br/>
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+                   <div style={{display: 'flex', flexDirection: 'column', width: '25%'}}>
+                     <div> Fuel Effinciency: {this.state.fuelEffinciencyCost}Rp</div>
+                     <button
+                     id="buttonOne"
+                     style={{ backgroundColor: (this.state.sum<this.state.fuelEffinciencyCost || this.state.launch <= 0)  ? "grey" : undefined}}
+                     disabled={(this.state.sum<this.state.fuelEffinciencyCost)}
+                     onClick={() => this.upgradeFuelEffinciency()}
+                     >Upgrade</button>
+                   </div>
+                   <div style={{display: 'flex', flexDirection: 'column', width: '25%'}}>
+                     <div> Capacity: {this.state.capacityCost}Rp</div>
+                     <button
+                     id="buttonOne"
+                     style={{ backgroundColor: (this.state.sum<this.state.capacityCost || this.state.launch <= 0)  ? "grey" : undefined}}
+                     disabled={(this.state.sum<this.state.fuelEffinciencyCost)}
+                     onClick={() => this.upgradeCapacity()}
+                     >Upgrade</button>
+                   </div>
+                   <div style={{display: 'flex', flexDirection: 'column', width: '25%'}}>
+                     <div> Range: {this.state.rangeCost}Rp</div>
+                     <button
+                     id="buttonOne"
+                     style={{ backgroundColor: (this.state.sum<this.state.rangeCost || this.state.launch <= 0)  ? "grey" : undefined}}
+                     disabled={(this.state.sum<this.state.rangeCost)}
+                     onClick={() => this.upgradeRange()}
+                     >Upgrade</button>
+                   </div>
+                   <div style={{display: 'flex', flexDirection: 'column', width: '25%'}}>
+                     <div> Reliability: {this.state.reliabilityCost}Rp</div>
+                     <button
+                     id="buttonOne"
+                     style={{ backgroundColor: (this.state.sum<this.state.reliabilityCost || this.state.launch <= 0 || this.state.reliability>=1)  ? "grey" : undefined}}
+                     disabled={(this.state.sum<this.state.reliabilityCost || this.state.reliability>=1)}
+                     onClick={() => this.upgradeReliability()}
+                     >Upgrade</button>
+                   </div>
+                   <div style={{display: 'flex', flexDirection: 'column', width: '25%'}}>
+                     <br/>
+                     <button
+                     id="buttonOne"
+                     style={{ backgroundColor: (this.state.numRocket <= 0)  ? "grey" : undefined}}
+                     disabled={(this.state.numRocket<1)}
+                     onClick={() => this.launchRocket()}
+                     >LAUNCH</button>
+                   </div>
                  </div>
-                 <div style={{display: 'flex', flexDirection: 'column', width: '25%'}}>
-                   <div> Capacity: {this.state.capacityCost}Rp</div>
-                   <button
-                   id="buttonOne"
-                   style={{ backgroundColor: (this.state.sum<this.state.capacityCost || this.state.launch <= 0)  ? "grey" : undefined}}
-                   disabled={(this.state.sum<this.state.fuelEffinciencyCost)}
-                   onClick={() => this.upgradeCapacity()}
-                   >Upgrade</button>
-                 </div>
-                 <div style={{display: 'flex', flexDirection: 'column', width: '25%'}}>
-                   <div> Range: {this.state.rangeCost}Rp</div>
-                   <button
-                   id="buttonOne"
-                   style={{ backgroundColor: (this.state.sum<this.state.rangeCost || this.state.launch <= 0)  ? "grey" : undefined}}
-                   disabled={(this.state.sum<this.state.rangeCost)}
-                   onClick={() => this.upgradeRange()}
-                   >Upgrade</button>
-                 </div>
-                 <div style={{display: 'flex', flexDirection: 'column', width: '25%'}}>
-                   <div> Reliability: {this.state.reliabilityCost}Rp</div>
-                   <button
-                   id="buttonOne"
-                   style={{ backgroundColor: (this.state.sum<this.state.reliabilityCost || this.state.launch <= 0 || this.state.reliability>=1)  ? "grey" : undefined}}
-                   disabled={(this.state.sum<this.state.reliabilityCost || this.state.reliability>=1)}
-                   onClick={() => this.upgradeReliability()}
-                   >Upgrade</button>
-                 </div>
-                 <div style={{display: 'flex', flexDirection: 'column', width: '25%'}}>
-                   <br/>
-                   <button
-                   id="buttonOne"
-                   style={{ backgroundColor: (this.state.numRocket <= 0)  ? "grey" : undefined}}
-                   disabled={(this.state.numRocket<1)}
-                   onClick={() => this.launchRocket()}
-                   >LAUNCH</button>
-                 </div>
-               </div>
-               <div> Number of Successful launches: {this.state.numLaunch}</div>
+                 <div> Number of Successful launches: {this.state.numLaunch}</div>
+              </div>}
                <br/>
                <br/>
-               <div style={{display: 'flex', flexDirection: 'row'}}>
-                 <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
-                   <button
-                   id="buttonTwo"
-                   style={{ backgroundColor:(
-                     (this.state.fuelEffinciency < 20) ||
-                     (this.state.capacity < 5) ||
-                     (this.state.range < 10000) ||
-                     (this.state.reliability < 0.8) ||
-                     (this.state.numLaunch < 10))
-                     ? "grey" : undefined}}
-                   disabled= {
-                     (this.state.fuelEffinciency < 20) ||
-                     (this.state.capacity < 5) ||
-                     (this.state.range < 10000) ||
-                     (this.state.reliability < 0.8) ||
-                     (this.state.numLaunch < 10)
-                     }
-                   onClick={() => this.goToMoon()}
-                   >THE MOON</button>
-                 </div>
-               </div>
+               {!this.moonCheck() && <div>
+                 <div style={{display: 'flex', flexDirection: 'row'}}>
+                   <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+                     <button
+                     id="buttonTwo"
+                     style={{ backgroundColor:this.moonCheck()
+                       ? "grey" : undefined}}
+                     disabled= {
+                       this.moonCheck()
+                       }
+                     onClick={() => this.goToMoon()}
+                     >THE MOON</button>
+                   </div>
+                </div>
+               </div>}
              </div>
              )
            }
